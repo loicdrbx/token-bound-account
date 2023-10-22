@@ -11,11 +11,22 @@ import "https://github.com/erc6551/reference/blob/v0.2.0-deployment/src/interfac
 import "https://github.com/erc6551/reference/blob/v0.2.0-deployment/src/lib/ERC6551AccountLib.sol";
 import "https://github.com/erc6551/reference/blob/v0.2.0-deployment/src/ERC6551Registry.sol";
 
+/**
+ * @title SimpleERC6551Account
+ * @dev A smart contract implementing the ERC-6551 (Token Bound Accounts) standard for NFT accounts.
+ */
 contract SimpleERC6551Account is IERC165, IERC1271, IERC6551Account {
     uint256 public nonce;
 
     receive() external payable {}
 
+    /**
+     * @dev Execute a call to an external (token bound account) contract.
+     * @param to The address of the external contract.
+     * @param value The amount of Ether to send with the call.
+     * @param data The data to include in the call.
+     * @return result The result of the external contract call.
+     */
     function executeCall(
         address to,
         uint256 value,
@@ -36,7 +47,12 @@ contract SimpleERC6551Account is IERC165, IERC1271, IERC6551Account {
         }
     }
 
-    // Explain
+    /**
+     * @dev Get information about the NFT associated with this account.
+     * @return tokenID The ID of the NFT.
+     * @return chain The chain on which the NFT is deployed.
+     * @return nftAddress The address of the NFT.
+     */
     function token()
         external
         view
@@ -49,6 +65,10 @@ contract SimpleERC6551Account is IERC165, IERC1271, IERC6551Account {
         return ERC6551AccountLib.token();
     }
 
+    /**
+     * @dev Get the owner of the NFT.
+     * @return The address of the NFT owner.
+     */
     function owner() public view returns (address) {
         (uint256 chainId, address tokenContract, uint256 tokenId) = this.token();
         if (chainId != block.chainid) {
@@ -57,13 +77,22 @@ contract SimpleERC6551Account is IERC165, IERC1271, IERC6551Account {
         return IERC721(tokenContract).ownerOf(tokenId);
     }
 
-    // IERC165
+    /**
+     * @dev Check if the contract supports the ERC-6551 interface.
+     * @param interfaceId The interface ID to check.
+     * @return A boolean indicating whether the contract supports the interface.
+     */
     function supportsInterface(bytes4 interfaceId) public pure returns (bool) {
         return (interfaceId == type(IERC165).interfaceId ||
             interfaceId == type(IERC6551Account).interfaceId);
     }
 
-    // IERC1271
+    /**
+     * @dev Check the validity of a signature.
+     * @param hash The hash to be verified.
+     * @param signature The signature to be verified.
+     * @return magicValue The magic value indicating the validity of the signature.
+     */
     function isValidSignature(bytes32 hash, bytes memory signature)
         external
         view
