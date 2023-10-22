@@ -7,43 +7,28 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "https://github.com/erc6551/reference/blob/v0.2.0-deployment/src/interfaces/IERC6551Registry.sol";
 import "https://github.com/erc6551/reference/blob/v0.2.0-deployment/src/lib/ERC6551AccountLib.sol";
 
-
 contract NFT is ERC721, Ownable {
-        /*//////////////////////////////////////////////////////////////
-                            STATE VARIABLES
-    //////////////////////////////////////////////////////////////*/
-    uint256 public totalSupply; // The total number of tokens minted on this contract
-    address public immutable tokenContract = address(this); // The address of this contract
 
-    // Explain below
-    address public immutable implementation; // The SimpleERC6551Account address
-    IERC6551Registry public immutable registry; // The 6551 registry address
-    uint public immutable chainId = block.chainid; // The chainId of the network this contract is deployed on
+    // State variables
+    uint256 public totalSupply;
+    address public immutable tokenContract = address(this);
+    address public immutable implementation;
+    IERC6551Registry public immutable registry;
+    uint256 public immutable chainId;
 
-    /*//////////////////////////////////////////////////////////////
-                              CONSTRUCTOR
-    //////////////////////////////////////////////////////////////*/
-    constructor(
-        // Fill Parameters
-    ) ERC721("HackTheNorthNFT", "HTNNFT") {
-        // Fill
+    constructor() ERC721("EthOnlineNFT", "ETHO.NFT") {
     }
 
-    /*//////////////////////////////////////////////////////////////
-                               FUNCTIONS
-    //////////////////////////////////////////////////////////////*/
-
-
-    function getAccount(uint tokenId) public view returns (address) {
-        // Fill
+    function getAccount(uint256 tokenId) public view returns (address) {
+        // Fill the implementation here
     }
 
-    function createAccount(uint tokenId) public returns (address) {
-        // Fill
+    function createAccount(uint256 tokenId) public returns (address) {
+        // Fill the implementation here
     }
 
-    function addEth(uint tokenId) external payable {
-        // Fill
+    function addEth(uint256 tokenId) external payable {
+        // Fill the implementation here
     }
 
     function safeMint() public onlyOwner {
