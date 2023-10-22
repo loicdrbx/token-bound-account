@@ -16,7 +16,12 @@ contract NFT is ERC721, Ownable {
     IERC6551Registry public immutable registry;
     uint256 public immutable chainId;
 
-    constructor() ERC721("EthOnlineNFT", "ETHO.NFT") {
+    constructor(
+        address _implementation,
+        address _registry       
+    ) ERC721("EthOnlineNFT", "ETHO.NFT") {
+        implementation = _implementation;
+        registry = IERC6551Registry(_registry); 
     }
 
     function getAccount(uint256 tokenId) public view returns (address) {
