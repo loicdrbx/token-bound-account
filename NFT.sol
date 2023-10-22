@@ -25,15 +25,32 @@ contract NFT is ERC721, Ownable {
     }
 
     function getAccount(uint256 tokenId) public view returns (address) {
-        // Fill the implementation here
+        return
+            registry.account(
+                implementation,
+                chainId,
+                tokenContract,
+                tokenId,
+                0
+            );
     }
 
     function createAccount(uint256 tokenId) public returns (address) {
-        // Fill the implementation here
+        return
+            registry.createAccount(
+                implementation,
+                chainId,
+                tokenContract,
+                tokenId,
+                0,
+                ""
+            );
     }
 
     function addEth(uint256 tokenId) external payable {
-        // Fill the implementation here
+        address account = getAccount(tokenId);
+        (bool success, ) = account.call{value: msg.value}("");
+        require(success, "Failed to send ETH");
     }
 
     function safeMint() public onlyOwner {
