@@ -19,7 +19,7 @@ contract NFT is ERC721, Ownable {
     address public immutable tokenContract = address(this);
     address public immutable implementation;
     IERC6551Registry public immutable registry;
-    uint256 public immutable chainId;
+    uint256 public immutable chainId = block.chainid;
 
     /**
      * @dev Constructor to initialize the contract.
